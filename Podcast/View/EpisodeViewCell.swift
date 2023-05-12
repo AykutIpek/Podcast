@@ -16,10 +16,16 @@ protocol EpisodeCellProtocol{
 
 final class EpisodeCell: UITableViewCell {
     // MARK: - Properties
+    var episode: EpisodeModel?{
+        didSet{
+            configure()
+        }
+    }
     private let episodeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.customMode()
         imageView.backgroundColor = .systemPurple
+        imageView.layer.cornerRadius = 12
         return imageView
     }()
     private let pudDateLabel: UILabel = {
@@ -32,9 +38,9 @@ final class EpisodeCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Title Label"
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 2
-        label.textColor = .systemPurple
+        label.textColor = .black
         return label
     }()
     private let descriptionLabel: UILabel = {
@@ -42,7 +48,7 @@ final class EpisodeCell: UITableViewCell {
         label.text = "Title Label"
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 2
-        label.textColor = .systemPurple
+        label.textColor = .lightGray
         return label
     }()
     private var stackView: UIStackView!
@@ -66,6 +72,7 @@ extension EpisodeCell: EpisodeCellProtocol{
     func style(){
         stackView = UIStackView(arrangedSubviews: [pudDateLabel,titleLabel,descriptionLabel])
         stackView.axis = .vertical
+        stackView.spacing = 5
     }
     func layout(){
         addSubview(episodeImageView)
@@ -74,7 +81,7 @@ extension EpisodeCell: EpisodeCellProtocol{
         episodeImageView.snp.makeConstraints { make in
             make.height.width.equalTo(100)
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview()
+            make.left.equalTo(10)
         }
         
         stackView.snp.makeConstraints { make in
@@ -82,6 +89,16 @@ extension EpisodeCell: EpisodeCellProtocol{
             make.left.equalTo(episodeImageView.snp.right).offset(10)
             make.right.equalToSuperview()
         }
+    }
+    
+    private func configure(){
+        guard let episode = self.episode else { return }
+        let viewModel = EpisodeCellViewModel(episode: episode)
+        self.titleLabel.text = episode.title
+        self.episodeImageView.kf.setImage(with: viewModel.profileImageUrl)
+        self.titleLabel.text =  viewModel.title
+        self.descriptionLabel.text = viewModel.description
+        self.pudDateLabel.text = viewModel.pubDate
     }
 }
 

@@ -83,7 +83,7 @@ extension SearchViewCell{
             make.height.equalTo(80)
             make.width.equalTo(80)
             make.centerY.equalToSuperview()
-            make.left.equalTo(4)
+            make.left.equalTo(10)
         }
         
         stackView.snp.makeConstraints { make in

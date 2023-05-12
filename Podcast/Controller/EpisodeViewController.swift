@@ -24,6 +24,11 @@ private let reuseIdentifier = "EpisodeCell"
 final class EpisodeViewController: UITableViewController {
     // MARK: - Properties
     private var podcast: Podcast
+    private var episodeResult: [EpisodeModel] = []{
+        didSet{
+            self.tableView.reloadData()
+        }
+    }
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,17 +57,22 @@ extension EpisodeViewController: EpisodeViewControllerProtocol{
         tableView.register(EpisodeCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
     func fetchData() {
-        EpisodeService.fetchData(urlString: self.podcast.feedUrl!)
+        EpisodeService.fetchData(urlString: self.podcast.feedUrl!) { result in
+            DispatchQueue.main.async {
+                self.episodeResult = result
+            }
+        }
     }
 }
 
 extension EpisodeViewController: TableViewDelegateandDatasourceProtocol{
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return 5
+        return episodeResult.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EpisodeCell
+        cell.episode = self.episodeResult[indexPath.item]
         return cell
     }
     
