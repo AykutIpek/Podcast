@@ -40,7 +40,7 @@ final class EpisodeCell: UITableViewCell {
         label.text = "Title Label"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 2
-        label.textColor = .black
+        label.textColor = .label
         return label
     }()
     private let descriptionLabel: UILabel = {
