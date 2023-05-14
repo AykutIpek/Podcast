@@ -17,6 +17,8 @@
 		E988883E2A0805F800C8D46E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E988883D2A0805F800C8D46E /* Extension.swift */; };
 		E9940EDA2A04486800A55D07 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9940ED92A04486800A55D07 /* SearchModel.swift */; };
 		E9940EDD2A0449FA00A55D07 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9940EDC2A0449FA00A55D07 /* SearchService.swift */; };
+		E9A02A4D2A110773003E441A /* CoreData+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A02A4C2A110773003E441A /* CoreData+Helpers.swift */; };
+		E9A02A4F2A110D82003E441A /* FavoriteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A02A4E2A110D82003E441A /* FavoriteCellViewModel.swift */; };
 		E9B26F142A03C0E8007C57D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B26F132A03C0E8007C57D0 /* AppDelegate.swift */; };
 		E9B26F162A03C0E8007C57D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B26F152A03C0E8007C57D0 /* SceneDelegate.swift */; };
 		E9B26F182A03C0E8007C57D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B26F172A03C0E8007C57D0 /* ViewController.swift */; };
@@ -44,6 +46,8 @@
 		E988883D2A0805F800C8D46E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		E9940ED92A04486800A55D07 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		E9940EDC2A0449FA00A55D07 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		E9A02A4C2A110773003E441A /* CoreData+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Helpers.swift"; sourceTree = "<group>"; };
+		E9A02A4E2A110D82003E441A /* FavoriteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCellViewModel.swift; sourceTree = "<group>"; };
 		E9B26F102A03C0E8007C57D0 /* Podcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Podcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9B26F132A03C0E8007C57D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9B26F152A03C0E8007C57D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				E988883D2A0805F800C8D46E /* Extension.swift */,
+				E9A02A4C2A110773003E441A /* CoreData+Helpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			children = (
 				E94AF5A52A05401900FBD86D /* SearchViewModel.swift */,
 				E9BF07BD2A0EA29C00776E75 /* EpisodeCellViewModel.swift */,
+				E9A02A4E2A110D82003E441A /* FavoriteCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -263,12 +269,14 @@
 			files = (
 				E9B26F312A03C2EA007C57D0 /* SearchViewController.swift in Sources */,
 				E9B26F182A03C0E8007C57D0 /* ViewController.swift in Sources */,
+				E9A02A4F2A110D82003E441A /* FavoriteCellViewModel.swift in Sources */,
 				E988883B2A0803EF00C8D46E /* EpisodeService.swift in Sources */,
 				E9940EDD2A0449FA00A55D07 /* SearchService.swift in Sources */,
 				E9B26F3B2A03F69E007C57D0 /* SearchViewCell.swift in Sources */,
 				E9BF07BE2A0EA29C00776E75 /* EpisodeCellViewModel.swift in Sources */,
 				E95E595D2A0FA7F6004F9384 /* PlayerViewController.swift in Sources */,
 				E9B26F332A03C301007C57D0 /* DownloadsViewController.swift in Sources */,
+				E9A02A4D2A110773003E441A /* CoreData+Helpers.swift in Sources */,
 				E9CF45DE2A10F05800154455 /* PodcastSwift.xcdatamodeld in Sources */,
 				E9BF07BC2A0E992B00776E75 /* EpisodeModel.swift in Sources */,
 				E988883E2A0805F800C8D46E /* Extension.swift in Sources */,
