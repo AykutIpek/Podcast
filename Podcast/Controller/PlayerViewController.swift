@@ -194,7 +194,7 @@ extension PlayerViewController{
         timerStackView.axis = .horizontal
     }
     private func configurePlayStackView(){
-        playStackView = UIStackView(arrangedSubviews: [goBackWordButton, UIView(), goPlayButton, UIView(), goForWordButton])
+        playStackView = UIStackView(arrangedSubviews: [UIView(), goBackWordButton, UIView(), goPlayButton, UIView(), goForWordButton, UIView()])
         playStackView.axis = .horizontal
         playStackView.distribution = .fillEqually
     }
@@ -238,17 +238,27 @@ extension PlayerViewController{
         }
         
         playStackView.snp.makeConstraints { make in
-            make.height.equalTo(60)
+            make.height.equalTo(50)
         }
     }
-    private func startPlay(){
-        guard let url = URL(string: episode!.streamUrl) else { return }
+    private func playPlayer(url: URL){
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
         self.goPlayButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         self.volumeSliderView.value = 40
         updateTimeLabel()
+    }
+    private func startPlay(){
+        if episode?.fileUrl != nil{
+            guard let url = URL(string: episode?.fileUrl ?? "") else { return }
+            guard var fileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            fileUrl.append(path: url.lastPathComponent)
+            playPlayer(url: fileUrl)
+            return
+        }
+        guard let url = URL(string: episode!.streamUrl) else { return }
+        playPlayer(url: url)
     }
     
     private func configureUI(){

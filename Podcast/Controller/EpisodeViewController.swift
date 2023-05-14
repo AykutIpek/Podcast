@@ -152,4 +152,18 @@ extension EpisodeViewController: TableViewDelegateandDatasourceProtocol{
         let controller = PlayerViewController(episode: episode)
         self.present(controller, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let downloadAction = UIContextualAction(style: .destructive, title: "Download") { action, view, completion in
+            UserDefaults.downloadEpisodeWrite(episode: self.episodeResult[indexPath.item])
+            EpisodeService.downlaodEpisode(episode: self.episodeResult[indexPath.item])
+            let window = UIApplication.shared.connectedScenes.first as! UIWindowScene
+            let mainTabController = window.keyWindow?.rootViewController as! MainTabbarViewController
+            mainTabController.viewControllers?[2].tabBarItem.badgeValue = "New"
+            completion(true)
+            print(UserDefaults.downloadEpisodeRead())
+        }
+        let configuration = UISwipeActionsConfiguration(actions: [downloadAction])
+        return configuration
+    }
 }

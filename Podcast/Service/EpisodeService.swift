@@ -7,9 +7,11 @@
 
 import Foundation
 import FeedKit
+import Alamofire
 
 protocol EpisodeServiceProtocol {
     static func fetchData(urlString: String, completion: @escaping([EpisodeModel])->Void)
+    static func downlaodEpisode(episode: EpisodeModel)
 }
 
 struct EpisodeService: EpisodeServiceProtocol {
@@ -34,6 +36,24 @@ struct EpisodeService: EpisodeServiceProtocol {
                 }
                 case .failure(let error):
                 print(error.localizedDescription)
+            }
+        }
+    }
+    
+    static func downlaodEpisode(episode: EpisodeModel) {
+        let downloadrequest = DownloadRequest.suggestedDownloadDestination()
+        AF.download(episode.streamUrl, to: downloadrequest).downloadProgress { progress in
+            let progressValue = progress.fractionCompleted
+            NotificationCenter.default.post(name: .downloadNotificationName, object: nil,userInfo: ["title": episode.title, "progress": progressValue])
+        }.response { response in
+            var downloadEpisodeResponse = UserDefaults.downloadEpisodeRead()
+            let index = downloadEpisodeResponse.firstIndex(where: {$0.author == episode.author && $0.streamUrl == episode.streamUrl})
+            downloadEpisodeResponse[index!].fileUrl = response.fileURL?.absoluteString
+            do{
+                let data = try JSONEncoder().encode(downloadEpisodeResponse)
+                UserDefaults.standard.set(data, forKey: UserDefaults.downloadKey)
+            }catch{
+                
             }
         }
     }

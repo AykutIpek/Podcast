@@ -51,6 +51,16 @@ final class EpisodeCell: UITableViewCell {
         label.textColor = .lightGray
         return label
     }()
+    var progressView: UIProgressView = {
+        let progressView = UIProgressView(progressViewStyle: .default)
+        progressView.trackTintColor = .lightGray
+        progressView.tintColor = .systemPurple
+        progressView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        progressView.layer.cornerRadius = 12
+        progressView.setProgress(Float(0), animated: true)
+        progressView.isHidden = true
+        return progressView
+    }()
     private var stackView: UIStackView!
     // MARK: - Life Cycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -77,6 +87,7 @@ extension EpisodeCell: EpisodeCellProtocol{
     func layout(){
         addSubview(episodeImageView)
         addSubview(stackView)
+        addSubview(progressView)
         
         episodeImageView.snp.makeConstraints { make in
             make.height.width.equalTo(100)
@@ -88,6 +99,13 @@ extension EpisodeCell: EpisodeCellProtocol{
             make.centerY.equalTo(episodeImageView.snp.centerY)
             make.left.equalTo(episodeImageView.snp.right).offset(10)
             make.right.equalToSuperview()
+        }
+        
+        progressView.snp.makeConstraints { make in
+            make.height.equalTo(20)
+            make.left.equalTo(episodeImageView.snp.left)
+            make.right.equalTo(episodeImageView.snp.right)
+            make.bottom.equalTo(episodeImageView.snp.bottom)
         }
     }
     

@@ -32,6 +32,7 @@ extension MainTabbarViewController: MainTabbarControllerProtocol{
             createViewController(rootViewController: SearchViewController(), title: "Search", imageName: "magnifyingglass"),
             createViewController(rootViewController: DownloadsViewController(), title: "Downloads", imageName: "square.stack.fill")
         ]
+        tabBar.tintColor = .systemPurple
     }
     
     func createViewController(rootViewController: UIViewController, title: String, imageName: String) -> UINavigationController {
