@@ -45,6 +45,13 @@ final class EpisodeViewController: UITableViewController {
     }
 }
 
+// MARK: - Selector
+extension EpisodeViewController{
+    @objc private func handleFavoriButton(_ sender: UIButton){
+        print("Favori add")
+    }
+}
+
 // MARK: - Helpers
 extension EpisodeViewController: EpisodeViewControllerProtocol{
     func setupUI() {
@@ -55,6 +62,8 @@ extension EpisodeViewController: EpisodeViewControllerProtocol{
     func configureTableView() {
         self.navigationItem.title = podcast.trackName
         tableView.register(EpisodeCell.self, forCellReuseIdentifier: reuseIdentifier)
+        let navRightItem = UIBarButtonItem(title: "Favori", style: .done, target: self, action: #selector(handleFavoriButton))
+        self.navigationItem.rightBarButtonItems = [navRightItem]
     }
     func fetchData() {
         EpisodeService.fetchData(urlString: self.podcast.feedUrl!) { result in
