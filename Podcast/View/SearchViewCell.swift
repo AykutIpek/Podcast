@@ -8,6 +8,14 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+protocol SearchViewCellInterface{
+    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
+    func setupUI()
+    func configure()
+    func configureStackView()
+    func layout()
+}
+
 
 final class SearchViewCell: UITableViewCell {
     //MARK: - Properties
@@ -56,12 +64,12 @@ final class SearchViewCell: UITableViewCell {
 }
 
 // MARK: - Helpers
-extension SearchViewCell{
-    private func setupUI(){
+extension SearchViewCell: SearchViewCellInterface{
+    func setupUI(){
         configureStackView()
         layout()
     }
-    private func configure(){
+    func configure(){
         guard let result = self.result else { return }
         let viewModel = SearchViewModel(podcast: result)
         trackName.text = viewModel.trackName
@@ -70,13 +78,13 @@ extension SearchViewCell{
         photoImageView.kf.setImage(with: viewModel.photoImageUrl)
     }
     
-    private func configureStackView(){
+    func configureStackView(){
         stackView = UIStackView(arrangedSubviews: [trackName,artistName,trackCount])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         
     }
-    private func layout(){
+    func layout(){
         addSubview(photoImageView)
         addSubview(stackView)
         photoImageView.snp.makeConstraints { make in

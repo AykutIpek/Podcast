@@ -12,6 +12,7 @@ protocol EpisodeCellProtocol{
     func setupUI()
     func style()
     func layout()
+    func configure()
 }
 
 final class EpisodeCell: UITableViewCell {
@@ -109,7 +110,7 @@ extension EpisodeCell: EpisodeCellProtocol{
         }
     }
     
-    private func configure(){
+    func configure(){
         guard let episode = self.episode else { return }
         let viewModel = EpisodeCellViewModel(episode: episode)
         self.titleLabel.text = episode.title

@@ -8,6 +8,13 @@
 import Foundation
 import UIKit
 
+protocol FavoriteCellInterface{
+    func setupUI()
+    func style()
+    func layout()
+    func configure()
+}
+
 final class FavoriteCell: UICollectionViewCell {
     // MARK: - Properties
     var podcastCoreData: PodcastCoreData?{
@@ -48,16 +55,16 @@ final class FavoriteCell: UICollectionViewCell {
 }
 
 // MARK: - Helpers
-extension FavoriteCell{
-    private func setupUI(){
+extension FavoriteCell: FavoriteCellInterface{
+    func setupUI(){
         style()
         layout()
     }
-    private func style(){
+    func style(){
         fullStackView = UIStackView(arrangedSubviews: [podcastImageView, podcastNameLabel, podcastArtistNameLabel])
         fullStackView.axis = .vertical
     }
-    private func layout(){
+    func layout(){
         addSubview(fullStackView)
         
         fullStackView.snp.makeConstraints { make in
@@ -72,7 +79,7 @@ extension FavoriteCell{
         }
     }
     
-    private func configure(){
+    func configure(){
         guard let podcastCoreData = self.podcastCoreData else { return  }
         let viewModel = FavoriteCellViewModel(podcastCoreData: podcastCoreData)
         self.podcastImageView.kf.setImage(with: viewModel.imageUrlPodcast)

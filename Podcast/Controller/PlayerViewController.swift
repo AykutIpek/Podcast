@@ -9,6 +9,23 @@ import Foundation
 import UIKit
 import AVKit
 
+protocol PlayerViewControllerInterface {
+    init(episode: EpisodeModel)
+    func setupUI()
+    func viewDidDisappear(_ animated: Bool)
+    func updateForWard(value: Int64)
+    func updateSlider()
+    func updateTimeLabel()
+    func configureTimerStackView()
+    func configurePlayStackView()
+    func configureVolumeStackView()
+    func configureMainStackView()
+    func layout()
+    func playPlayer(url: URL)
+    func startPlay()
+    func configureUI()
+}
+
 final class PlayerViewController: UIViewController {
     // MARK: - Properties
     var episode: EpisodeModel?
@@ -159,8 +176,8 @@ extension PlayerViewController{
 }
 
 // MARK: - Helpers
-extension PlayerViewController{
-    private func setupUI(){
+extension PlayerViewController: PlayerViewControllerInterface{
+    func setupUI(){
         configureTimerStackView()
         configurePlayStackView()
         configureVolumeStackView()
@@ -169,18 +186,18 @@ extension PlayerViewController{
         startPlay()
         configureUI()
     }
-    fileprivate func updateForWard(value: Int64){
+    func updateForWard(value: Int64){
         let exampleTime = CMTime(value: value, timescale: 1)
         let seekTime = CMTimeAdd(player.currentTime(), exampleTime)
         player.seek(to: seekTime)
     }
-    fileprivate func updateSlider(){
+    func updateSlider(){
         let currentTimeSecond = CMTimeGetSeconds(player.currentTime())
         let durationTime = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
         let resultSecondTime = currentTimeSecond / durationTime
         self.sliderView.value = Float(resultSecondTime)
     }
-    fileprivate func updateTimeLabel(){
+    func updateTimeLabel(){
         let interval = CMTimeMake(value: 1, timescale: 2)
         player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
             self.startLabel.text = time.formatString()
@@ -189,20 +206,20 @@ extension PlayerViewController{
             self.updateSlider()
         }
     }
-    private func configureTimerStackView(){
+    func configureTimerStackView(){
         timerStackView = UIStackView(arrangedSubviews: [startLabel, endLabel])
         timerStackView.axis = .horizontal
     }
-    private func configurePlayStackView(){
+    func configurePlayStackView(){
         playStackView = UIStackView(arrangedSubviews: [UIView(), goBackWordButton, UIView(), goPlayButton, UIView(), goForWordButton, UIView()])
         playStackView.axis = .horizontal
         playStackView.distribution = .fillEqually
     }
-    private func configureVolumeStackView(){
+    func configureVolumeStackView(){
         volumeStackView = UIStackView(arrangedSubviews: [minusImageView, volumeSliderView, plusImageView])
         volumeStackView.axis = .horizontal
     }
-    private func configureMainStackView(){
+    func configureMainStackView(){
         let fullTimerStackView = UIStackView(arrangedSubviews: [sliderView, timerStackView])
         fullTimerStackView.axis = .vertical
         mainStackView = UIStackView(arrangedSubviews: [closeButton, episodeImageView, fullTimerStackView, UIView(), nameLabel, userLabel, UIView(), playStackView, volumeStackView])
@@ -210,7 +227,7 @@ extension PlayerViewController{
         mainStackView.distribution = .equalSpacing
     }
 
-    private func layout(){
+    func layout(){
         ///Add Subview
         view.addSubview(mainStackView)
         ///Screen Layout
@@ -241,7 +258,7 @@ extension PlayerViewController{
             make.height.equalTo(50)
         }
     }
-    private func playPlayer(url: URL){
+    func playPlayer(url: URL){
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
@@ -249,7 +266,7 @@ extension PlayerViewController{
         self.volumeSliderView.value = 40
         updateTimeLabel()
     }
-    private func startPlay(){
+    func startPlay(){
         if episode?.fileUrl != nil{
             guard let url = URL(string: episode?.fileUrl ?? "") else { return }
             guard var fileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
@@ -261,7 +278,7 @@ extension PlayerViewController{
         playPlayer(url: url)
     }
     
-    private func configureUI(){
+    func configureUI(){
         self.episodeImageView.kf.setImage(with: URL(string: episode?.imageUrl ?? ""))
         self.nameLabel.text = episode?.title
         self.userLabel.text = episode?.author

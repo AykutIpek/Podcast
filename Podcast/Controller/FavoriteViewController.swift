@@ -8,6 +8,13 @@
 import Foundation
 import UIKit
 
+protocol FavoriteViewControllerInterface {
+    init()
+    func viewWillAppear(_ animated: Bool)
+    func fetchData()
+    func style()
+}
+
 private let reuseIdentifier = "FavoriteCell"
 final class FavoriteViewController: UICollectionViewController {
     // MARK: - Properties
@@ -20,7 +27,7 @@ final class FavoriteViewController: UICollectionViewController {
     init() {
         let flowLayout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: flowLayout)
-        setupUI()
+        style()
     }
     
     required init?(coder: NSCoder) {
@@ -37,23 +44,16 @@ final class FavoriteViewController: UICollectionViewController {
 }
 
 // MARK: - Helpers
-extension FavoriteViewController{
-    private func setupUI(){
-        style()
-        layout()
+extension FavoriteViewController: FavoriteViewControllerInterface{
+    func style(){
+        view.backgroundColor = .systemBackground
+        collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
-    private func fetchData(){
+    func fetchData(){
         let fetchRequest = PodcastCoreData.fetchRequest()
         CoreDataControl.fetchCoreData(fetchRequst: fetchRequest) { result in
             self.resultCoreDataItems = result
         }
-    }
-    private func style(){
-        view.backgroundColor = .systemBackground
-        collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-    }
-    private func layout(){
-        
     }
 }
 

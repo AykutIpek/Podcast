@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 import SnapKit
 
-protocol MainTabbarControllerProtocol{
+protocol MainTabbarControllerInterface{
+    func viewDidLoad()
     func style()
     func createViewController(rootViewController: UIViewController, title: String, imageName: String)-> UINavigationController
 }
@@ -25,7 +26,7 @@ final class MainTabbarViewController: UITabBarController {
 }
 
 // MARK: - Helpers
-extension MainTabbarViewController: MainTabbarControllerProtocol{
+extension MainTabbarViewController: MainTabbarControllerInterface{
     func style() {
         viewControllers = [
             createViewController(rootViewController: FavoriteViewController(), title: "Favorites", imageName: "house.fill"),

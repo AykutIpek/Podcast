@@ -8,6 +8,16 @@
 import Foundation
 import UIKit
 
+
+protocol DownloadsViewControllerInterface {
+    func viewDidLoad()
+    func viewWillAppear(_ animated: Bool)
+    func setupUI()
+    func style()
+    func setNotificationCenter()
+}
+
+
 private let reuseIdentifier = "DownloadCell"
 final class DownloadsViewController: UITableViewController {
     // MARK: - Properties
@@ -44,19 +54,15 @@ extension DownloadsViewController{
 }
 
 // MARK: - Helpers
-extension DownloadsViewController{
-    private func setupUI(){
+extension DownloadsViewController: DownloadsViewControllerInterface{
+    func setupUI(){
         style()
-        layout()
         setNotificationCenter()
     }
-    private func style(){
+    func style(){
         tableView.register(EpisodeCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
-    private func layout(){
-        
-    }
-    private func setNotificationCenter(){
+    func setNotificationCenter(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownload), name: .downloadNotificationName, object: nil)
     }
 }

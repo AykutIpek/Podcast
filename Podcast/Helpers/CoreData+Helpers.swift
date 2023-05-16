@@ -10,9 +10,15 @@ import CoreData
 import UIKit
 
 
+protocol CoreDataControlInterface{
+    static func addCoreData(model: PodcastCoreData, podcast: Podcast)
+    static func deleteCoreData(array: [PodcastCoreData], podcast: Podcast)
+    static func fetchCoreData(fetchRequst: NSFetchRequest<PodcastCoreData>, completion: @escaping([PodcastCoreData])->Void)
+}
+
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
-struct CoreDataControl {
+struct CoreDataControl: CoreDataControlInterface{
     static func addCoreData(model: PodcastCoreData, podcast: Podcast){
         model.feedUrl = podcast.feedUrl
         model.artworkUrl600 = podcast.artworkUrl600

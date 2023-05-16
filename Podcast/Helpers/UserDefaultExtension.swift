@@ -7,7 +7,12 @@
 
 import Foundation
 
-extension UserDefaults{
+protocol UserDefaultsInterface{
+    static func downloadEpisodeWrite(episode: EpisodeModel)
+    static func downloadEpisodeRead()-> [EpisodeModel]
+}
+
+extension UserDefaults: UserDefaultsInterface{
     static let downloadKey = "downloadedKey"
     //Input
     static func downloadEpisodeWrite(episode: EpisodeModel){

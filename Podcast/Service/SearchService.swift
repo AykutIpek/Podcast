@@ -18,7 +18,11 @@ extension ServicePath{
     }
 }
 
-struct SearchService{
+protocol SerachServiceInterface{
+    static func fetchData(searchText: String, completion: @escaping ([Podcast])-> Void)
+}
+
+struct SearchService: SerachServiceInterface{
     static func fetchData(searchText: String, completion: @escaping ([Podcast])-> Void){
         let parameters = ["media": "podcast", "term": searchText]
         AF.request(ServicePath.POSTS.withBaseUrl(), parameters: parameters).responseData { response in
